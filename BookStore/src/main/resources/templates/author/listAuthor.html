@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title th:text="#{author.list}"></title>
+<div th:replace="common/common :: bootstrap"></div>
+</head>
+<body>
+	<h1 th:text="#{author.list}"></h1>
+	<div th:replace="common/common :: menu"></div>
+	<table class="table">
+		<thead class="thead-dark">
+			<tr>
+				<th th:text="#{author.id}"></th>
+				<th th:text="#{author.name}"></th>
+				<th>Tùy chọn</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="author : ${listAuthor}">
+				<td th:text="${author.id_author}"></td>
+				<td th:text="${author.name_author}"></td>
+				<td><a th:href="@{/delete-author/{id}(id=${author.id_author})}">Xóa</a></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

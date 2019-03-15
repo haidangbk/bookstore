@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form th:action="@{/edit-book/{id}(id=*{id_book})}" method="POST"
+		th:object="${book}">
+		<div th:text="#{book.name}"></div>
+		<input th:field="*{name_book}" />
+		<div th:text="#{book.price}"></div>
+		<input th:field="*{price_book}" />
+		<div th:text="#{book.category}"></div>
+		<input th:field="*{category_book}" />
+		<div th:text="#{book.number}"></div>
+		<input th:field="*{number_book}" />
+		<div th:text="#{book.author}"></div>
+		<div th:each="authorDTO:${authorDTOs}">
+
+			<div th:each="bAuthorDTO : *{authorDTOs}">
+				<input  type="checkbox" th:text="${authorDTO.name_author}"
+					name="authorDTO" th:value="${authorDTO.id_author}"
+					th:if="${bAuthorDTO.id_author} == ${authorDTO.id_author}"
+					th:checked="checked"
+					
+					 />
+			</div>
+
+			<!--  -->
+		</div>
+		<input type="hidden" th:field="*{flag_delete}" /> <input
+			type="submit" value="sửa" />
+	</form>
+</body>
+</html>

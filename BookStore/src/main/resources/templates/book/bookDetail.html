@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title th:text="#{book.detail}"></title>
+<div th:replace="common/common :: bootstrap"></div>
+</head>
+<body>
+	<h1 th:text="#{book.detail}"></h1>
+	<table class="table">
+		<thead class="thead-dark">
+			<tr>
+				<th th:text="#{book.id}"></th>
+				<th th:text="#{book.name}"></th>
+				<th th:text="#{book.author}"></th>
+				<th th:text="#{book.price}"></th>
+				<th th:text="#{book.category}"></th>
+				<th th:text="#{book.number}"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td th:text="${book.id_book}"></td>
+				<td th:text="${book.name_book}"></td>
+				<td><select>
+						<option th:each="author : ${book.authorDTOs}"
+							th:text="${author.name_author}"></option>
+				</select></td>
+				<td th:text="${book.price_book}"></td>
+				<td th:text="${book.category_book}"></td>
+				<td th:text="${book.number_book}"></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

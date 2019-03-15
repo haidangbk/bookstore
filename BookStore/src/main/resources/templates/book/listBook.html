@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<div th:replace="common/common :: bootstrap"></div>
+<link rel="stylesheet" type="text/css" th:href="@{/css/listBook.css}" />
+</head>
+<body>
+	<h1 th:text="#{book.list}"></h1>
+	<div th:replace="common/common :: menu"></div>
+	<div th:replace="common/common :: nav_top"></div>
+	<table class="table table-hover">
+		<thead class="thead-dark">
+			<tr>
+				<th th:utext="#{book.name} + #{icon.sort}"></th>
+				<th th:text="#{book.price}"></th>
+				<th th:text="#{book.category}"></th>
+				<th th:text="#{detail}"></th>
+				<th th:text="#{delete}"></th>
+				<th th:text="#{edit}"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="book : ${bookDTOs}">
+				<td th:text="${book.name_book}"></td>
+				<td th:text="${book.price_book}"></td>
+				<td th:text="${book.category_book}"></td>
+				<td><a th:href="@{/book-detail/{id}(id=${book.id_book})}">
+						<i class="fas fa-info"></i>
+				</a></td>
+				<td><a th:href="@{/delete-book/{id}(id=${book.id_book})}">
+						<i class="fas fa-trash"></i>
+				</a></td>
+
+				<td><a th:href="@{/edit-book/{id}(id=${book.id_book})}"> <i
+						class="far fa-edit"></i></a></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
