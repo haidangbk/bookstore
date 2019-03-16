@@ -17,5 +17,6 @@ public interface BookDao {
 	public void editBook(Book book);
 	
 	public List<Book> findBookByName(String nameBook);
-
+	
+	public List<Book> sortAll(String column, String upOrDown);
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
@@ -95,14 +96,34 @@ public class BookController {
 		bookService.editBook(bookDTO);
 		return "redirect:/list-book";
 	}
-	
-	@GetMapping(value="/find-book-by-name")
-	public String findBook(HttpServletRequest request,@RequestParam (name="search") String search) {
+
+	@GetMapping(value = "/find-book-by-name")
+	public String findBook(HttpServletRequest request, @RequestParam(name = "search") String search,HttpSession session) {
 		if (search.isEmpty()) {
 			return "redirect:/";
 		}
 		List<BookDTO> bookDTOs = bookService.findBookByName(search);
 		request.setAttribute("search", search);
+		request.setAttribute("bookDTOs", bookDTOs);
+		session.setAttribute("find", 1);
+		return "book/listBook";
+	}
+
+	@GetMapping(value = "/sort-book-by-{sort}")
+	public String sortBook(HttpServletRequest request, @PathVariable(name = "sort") String sort, HttpSession session) {
+		List<BookDTO> bookDTOs;
+		if (session.getAttribute(sort + "trendSort") == null) {
+			session.setAttribute(sort + "trendSort","ASC");
+			bookDTOs = bookService.sortAll(sort,"DESC");
+		} else {
+			if (session.getAttribute(sort + "trendSort").equals("ASC")) {
+				bookDTOs = bookService.sortAll(sort, "ASC");
+				session.setAttribute(sort + "trendSort", "DESC");
+			} else {
+				bookDTOs = bookService.sortAll(sort, "DESC");
+				session.setAttribute(sort + "trendSort","ASC");
+			}
+		}
 		request.setAttribute("bookDTOs", bookDTOs);
 		return "book/listBook";
 	}

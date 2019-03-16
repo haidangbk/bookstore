@@ -43,17 +43,23 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public void editBook(Book book) {
 		entityManager.merge(book);
-		
+
 	}
 
 //	Khi tìm kiếm phân biệt chữ có dấu và chữ viết hoa sử dụng: LIKE BINARY '%':nameBook'%'
 	@Override
-	public List<Book> findBookByName(String nameBook) {
-		String jql = "SELECT b FROM Book b WHERE b.name_book LIKE '%"+nameBook+"%'";
+	public List<Book> findBookByName(String search) {
+		String jql = "SELECT b FROM Book b WHERE b.name_book LIKE '%" + search + "%' OR b.category_book LIKE '%"+search+"%'";
+		Query query = entityManager.createQuery(jql, Book.class);
+		return (List<Book>) query.getResultList();
+	}
+
+	@Override
+	public List<Book> sortAll(String column, String upOrDown) {
+		String jql = "SELECT b FROM Book b ORDER BY "+ column +" " +upOrDown;
 		Query query = entityManager.createQuery(jql,Book.class);
 		return (List<Book>) query.getResultList();
 	}
-	
 	
 
 }

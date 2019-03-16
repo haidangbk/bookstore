@@ -121,4 +121,22 @@ public class BookServiceImpl implements BookService {
 		}
 		return bookDTOs;
 	}
+
+	@Override
+	public List<BookDTO> sortAll(String column, String upOrDown) {
+		
+		List<Book> books = bookDao.sortAll(column, upOrDown);
+		List<BookDTO> bookDTOs = new ArrayList<BookDTO>();
+		for (Book book : books) {
+			BookDTO bookDTO = new BookDTO();
+			bookDTO.setId_book(book.getId_book());
+			bookDTO.setName_book(book.getName_book());
+			bookDTO.setPrice_book(book.getPrice_book());
+			bookDTO.setCategory_book(book.getCategory_book());
+			bookDTO.setNumber_book(book.getNumber_book());
+			bookDTO.setFlag_delete(book.getFlag_delete());
+			bookDTOs.add(bookDTO);
+		}
+		return bookDTOs;
+	}
 }
